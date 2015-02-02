@@ -40,6 +40,16 @@ static NSString *AutoCompletionCellIdentifier = @"AutoCompletionCell";
     return self;
 }
 
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        // Register a subclass of SLKTextView, if you need any special appearance and/or behavior customisation.
+        [self registerClassForTextView:[MessageTextView class]];
+    }
+    return self;
+}
+
 + (UITableViewStyle)tableViewStyleForCoder:(NSCoder *)decoder
 {
     return UITableViewStylePlain;
@@ -395,10 +405,12 @@ static NSString *AutoCompletionCellIdentifier = @"AutoCompletionCell";
     
     cell.titleLabel.text = message.username;
     cell.bodyLabel.text = message.text;
-    cell.tumbnailView.image = nil;
-    cell.attachmentView.image = message.attachment;
-    cell.attachmentView.layer.shouldRasterize = YES;
-    cell.attachmentView.layer.rasterizationScale = [UIScreen mainScreen].scale;
+    
+    if (message.attachment) {
+        cell.attachmentView.image = message.attachment;
+        cell.attachmentView.layer.shouldRasterize = YES;
+        cell.attachmentView.layer.rasterizationScale = [UIScreen mainScreen].scale;
+    }
     
     cell.indexPath = indexPath;
     cell.usedForMessage = YES;
