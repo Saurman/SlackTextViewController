@@ -85,11 +85,16 @@ static NSString *AutoCompletionCellIdentifier = @"AutoCompletionCell";
     self.keyboardPanningEnabled = YES;
     self.shouldScrollToBottomAfterKeyboardShows = NO;
     self.inverted = YES;
+	
+	UIEdgeInsets insets = self.textInputbar.contentInset;
+	insets.left = 0;
+	self.textInputbar.contentInset = insets;
     
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.tableView registerClass:[MessageTableViewCell class] forCellReuseIdentifier:MessengerCellIdentifier];
 
-    [self.leftButton setImage:[UIImage imageNamed:@"icn_upload"] forState:UIControlStateNormal];
+	self.leftButton.superview.backgroundColor = [UIColor redColor];
+    [self.leftButton setImage:[UIImage imageNamed:@"input_icon2"] forState:UIControlStateNormal];
     [self.leftButton setTintColor:[UIColor grayColor]];
 
     [self.rightButton setTitle:NSLocalizedString(@"Send", nil) forState:UIControlStateNormal];
@@ -206,9 +211,12 @@ static NSString *AutoCompletionCellIdentifier = @"AutoCompletionCell";
 
 - (void)didPressLeftButton:(UIButton *)sender
 {
-    // Notifies the view controller when the left button's action has been triggered, manually.
-	sender.superview.layer.transform = sender.tag? CATransform3DIdentity : CATransform3DMakeRotation(M_PI_4, 0, 0, 1);
-	sender.tag = 1 - sender.tag;
+	[UIView animateWithDuration:0.35f
+					 animations:^{
+						 // Notifies the view controller when the left button's action has been triggered, manually.
+						 sender.superview.layer.transform = sender.tag? CATransform3DIdentity : CATransform3DMakeRotation(M_PI_4, 0, 0, 1);
+						 sender.tag = 1 - sender.tag;
+					 }];
 	
     [super didPressLeftButton:sender];
 }
