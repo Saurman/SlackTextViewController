@@ -1033,6 +1033,8 @@ NSString * const SLKKeyboardDidHideNotification =   @"SLKKeyboardDidHideNotifica
 		UIEdgeInsets contentInset = self.scrollViewProxy.contentInset;
 		contentInset.bottom = [self _topBarsHeight];
         self.scrollViewProxy.contentInset = contentInset;
+		
+		contentInset.top = contentInset.left = contentInset.right = 0;
         self.scrollViewProxy.scrollIndicatorInsets = contentInset;
     }
     
