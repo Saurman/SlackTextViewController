@@ -72,7 +72,7 @@
     }
     
     // Registers for undo management
-    [self prepareForUndo:@"Text appending"];
+    [self slk_prepareForUndo:@"Text appending"];
     
     // Append the new string at the caret position
     if (range.length == 0)
@@ -107,12 +107,9 @@
     NSString *text = self.text;
     NSInteger location = range.location;
     
-    if (location > text.length) {
-        location = text.length;
-    }
-    
-    if (text.length == 0) {
-        *rangePointer = NSMakeRange(0.0, 0.0);
+    // Aborts in case minimum requieres are not fufilled
+    if (text.length == 0 || location < 0 || (range.location+range.length) > text.length) {
+        *rangePointer = NSMakeRange(0, 0);
         return nil;
     }
     
@@ -148,7 +145,7 @@
     return word;
 }
 
-- (void)prepareForUndo:(NSString *)description
+- (void)slk_prepareForUndo:(NSString *)description
 {
     if (!self.undoManagerEnabled) {
         return;
