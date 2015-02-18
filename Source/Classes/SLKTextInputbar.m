@@ -530,25 +530,26 @@
                               @"minTextViewHeight" : @(self.textView.intrinsicContentSize.height),
                               };
 
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(left)-[leftButton]-(<=left)-[textView]-(right)-[rightButton(0)]-(right)-|" options:NSLayoutFormatDirectionLeftToRight metrics:metrics views:views]];
+	NSLayoutFormatOptions hOptions = NSLayoutFormatDirectionLeftToRight;
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(left)-[leftButton]-(<=left)-[textView]-(right)-[rightButton(0)]-(right)-|" options:hOptions metrics:metrics views:views]];
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(>=0)-[leftButton]-(0@750)-|" options:0 metrics:metrics views:views]];
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(>=rightVerMargin)-[rightButton]-(<=rightVerMargin)-|" options:0 metrics:metrics views:views]];
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(<=top)-[charCountLabel]-(>=0)-|" options:0 metrics:metrics views:views]];
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(left@250)-[charCountLabel(<=50@1000)]-(right@750)-|" options:NSLayoutFormatDirectionLeftToRight metrics:metrics views:views]];
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(left@250)-[charCountLabel(<=50@1000)]-(right@750)-|" options:hOptions metrics:metrics views:views]];
 
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[contentView(0)]-(<=top)-[textView(minTextViewHeight@250)]-(bottom)-|" options:0 metrics:metrics views:views]];
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[contentView]|" options:NSLayoutFormatDirectionLeftToRight metrics:metrics views:views]];
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[contentView]|" options:hOptions metrics:metrics views:views]];
     
     self.editorContentViewHC = [self slk_constraintForAttribute:NSLayoutAttributeHeight firstItem:self.editorContentView secondItem:nil];
     
     self.leftButtonWC = [self.leftButton.superview slk_constraintForAttribute:NSLayoutAttributeWidth firstItem:self.leftButton secondItem:nil];
     self.leftButtonHC = [self.leftButton.superview slk_constraintForAttribute:NSLayoutAttributeHeight firstItem:self.leftButton secondItem:nil];
     
-    self.leftMarginWC = [self slk_constraintsForAttribute:NSLayoutAttributeLeading][0];
+	self.leftMarginWC = [self slk_constraintsForAttribute:hOptions > 0? NSLayoutAttributeLeft : NSLayoutAttributeLeading][0];
     self.bottomMarginWC = [self slk_constraintForAttribute:NSLayoutAttributeBottom firstItem:self secondItem:self.leftButton.superview];
 
     self.rightButtonWC = [self slk_constraintForAttribute:NSLayoutAttributeWidth firstItem:self.rightButton secondItem:nil];
-    self.rightMarginWC = [self slk_constraintsForAttribute:NSLayoutAttributeTrailing][0];
+	self.rightMarginWC = [self slk_constraintsForAttribute:hOptions > 0? NSLayoutAttributeRight :NSLayoutAttributeTrailing][0];
 }
 
 - (void)_updateConstraintConstants
