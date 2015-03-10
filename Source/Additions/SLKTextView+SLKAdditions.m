@@ -73,28 +73,52 @@
     
     // Registers for undo management
     [self slk_prepareForUndo:@"Text appending"];
-    
+	NSAttributedString *strToInsert = [self slk_attributedStringOfSameStyleFromText:text];
+	NSMutableAttributedString *str = [self.attributedText mutableCopy];
+	
     // Append the new string at the caret position
     if (range.length == 0)
     {
+		[str insertAttributedString:strToInsert atIndex:range.location];
+		/*
         NSString *leftString = [self.text substringToIndex:range.location];
         NSString *rightString = [self.text substringFromIndex: range.location];
         
         self.text = [NSString stringWithFormat:@"%@%@%@", leftString, text, rightString];
-        
+        */
+		self.attributedText = str;
         range.location += [text length];
         return range;
     }
+	
     // Some text is selected, so we replace it with the new text
     else if (range.location != NSNotFound && range.length > 0)
     {
-        self.text = [self.text stringByReplacingCharactersInRange:range withString:text];
+		[str replaceCharactersInRange:range withAttributedString:strToInsert];
+		self.attributedText = str;
+		//self.text = [self.text stringByReplacingCharactersInRange:range withString:text];
         
         return NSMakeRange(range.location+[self.text rangeOfString:text].length, text.length);
     }
     
     // No text has been inserted, but still return the caret range
     return self.selectedRange;
+}
+
+- (NSAttributedString *)slk_attributedStringOfSameStyleFromText:(NSString *)text {
+	if ( !text )
+		return nil;
+
+	__block NSAttributedString *result = nil;
+	[self.attributedText enumerateAttributesInRange:(NSMakeRange(0, self.attributedText.length)) options:0 usingBlock:^(NSDictionary *attrs, NSRange range, BOOL *stop) {
+		id attachment = [attrs objectForKey:NSAttachmentAttributeName];
+		if ( attachment && ![attachment isKindOfClass:[NSTextAttachment class]] ) {
+			result = [[NSAttributedString alloc] initWithString:text attributes:attrs];
+			*stop = YES;
+		}
+	}];
+	
+	return result;
 }
 
 - (NSString *)slk_wordAtCaretRange:(NSRangePointer)range
