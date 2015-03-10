@@ -512,8 +512,8 @@ SLKPastableMediaType SLKPastableMediaTypeFromNSString(NSString *string)
 		NSString *pastedText = pastedItem;
 		
 		const NSInteger maxMessageLength = self.textInputBar.maxCharCount;
-		if ( maxMessageLength > 0 && pastedText.length > 1 && ([self slk_plainText].length + pastedText.length) > maxMessageLength ) {
-			NSInteger acceptableCharsCount = maxMessageLength - [self slk_plainText].length;
+		if ( maxMessageLength > 0 && pastedText.length > 1 && ([self slk_plainText].length + pastedText.length - self.selectedRange.length) > maxMessageLength ) {
+			NSInteger acceptableCharsCount = maxMessageLength - [self slk_plainText].length + self.selectedRange.length;
 			if ( acceptableCharsCount > 0 )
 				pastedText = [pastedText substringToIndex:acceptableCharsCount];
 		}
