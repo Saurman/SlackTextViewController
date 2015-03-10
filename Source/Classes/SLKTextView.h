@@ -90,4 +90,6 @@ typedef NS_OPTIONS(NSUInteger, SLKPastableMediaType) {
  */
 - (void)didPressAnyArrowKey:(id)sender;
 
+- (NSString *)slk_plainText;
+
 @end

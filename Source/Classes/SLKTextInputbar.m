@@ -267,7 +267,7 @@
 
 - (BOOL)limitExceeded
 {
-    NSString *text = [self.textView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    NSString *text = [self.textView slk_plainText];
     
     if (self.maxCharCount > 0 && text.length > self.maxCharCount) {
         return YES;
@@ -411,7 +411,7 @@
 
 - (void)slk_updateCounter
 {
-    NSString *text = [self.textView.text stringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet]];
+    NSString *text = [self.textView slk_plainText];
     NSString *counter = nil;
     
     if (self.counterStyle == SLKCounterStyleNone) {

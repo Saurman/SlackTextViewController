@@ -205,6 +205,21 @@ NSString * const SLKTextViewPastedItemData =                    @"SLKTextViewPas
     return [[pasteboardTypes filteredArrayUsingPredicate:[NSCompoundPredicate orPredicateWithSubpredicates:subpredicates]] firstObject];
 }
 
+- (NSString *)slk_plainText {
+	NSMutableString *result = [NSMutableString string];
+	
+	// find image if its already there and remove it
+	[self.attributedText enumerateAttributesInRange:(NSMakeRange(0, self.attributedText.length)) options:0 usingBlock:^(NSDictionary *attrs, NSRange range, BOOL *stop) {
+		id attachment = [attrs objectForKey:NSAttachmentAttributeName];
+		if ( ![attachment isKindOfClass:[NSTextAttachment class]] ) {
+			NSAttributedString *substring = [self.attributedText attributedSubstringFromRange:range];
+			[result appendString:[substring string]];
+		}
+	}];
+	
+	return [result stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+}
+
 - (NSArray *)slk_supportedMediaTypes
 {
     if (self.pastableMediaTypes == SLKPastableMediaTypeNone) {
