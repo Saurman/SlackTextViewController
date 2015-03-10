@@ -38,8 +38,12 @@ typedef NS_OPTIONS(NSUInteger, SLKPastableMediaType) {
     SLKPastableMediaTypeAll         = SLKPastableMediaTypeImages|SLKPastableMediaTypeMOV
 };
 
+@class SLKTextInputbar;
+
 /** @name A custom text input view. */
 @interface SLKTextView : UITextView
+
+@property (nonatomic, weak) SLKTextInputbar *textInputBar;
 
 /** The placeholder text string. */
 @property (nonatomic, copy) NSString *placeholder;

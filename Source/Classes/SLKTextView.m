@@ -17,6 +17,7 @@
 #import "SLKTextView.h"
 #import "SLKTextView+SLKAdditions.h"
 #import "SLKUIConstants.h"
+#import "SLKTextInputbar.h"
 
 NSString * const SLKTextViewTextWillChangeNotification =        @"SLKTextViewTextWillChangeNotification";
 NSString * const SLKTextViewContentSizeDidChangeNotification =  @"SLKTextViewContentSizeDidChangeNotification";
@@ -155,9 +156,6 @@ NSString * const SLKTextViewPastedItemData =                    @"SLKTextViewPas
 // Returns a different number of lines when landscape and only on iPhone
 - (NSUInteger)maxNumberOfLines
 {
-    if (SLK_IS_IPHONE && SLK_IS_LANDSCAPE) {
-        return 2.0;
-    }
     return _maxNumberOfLines;
 }
 
@@ -494,10 +492,20 @@ SLKPastableMediaType SLKPastableMediaTypeFromNSString(NSString *string)
                 return;
             }
         }
-        
-        // Inserting the text fixes a UITextView bug whitch automatically scrolls to the bottom
+		
+		
+		NSString *pastedText = pastedItem;
+		
+		const NSInteger maxMessageLength = self.textInputBar.maxCharCount;
+		if ( maxMessageLength > 0 && pastedText.length > 1 && (self.text.length + pastedText.length) > maxMessageLength ) {
+			NSInteger acceptableCharsCount = maxMessageLength - self.text.length;
+			if ( acceptableCharsCount > 0 )
+				pastedText = [pastedText substringToIndex:acceptableCharsCount];
+		}
+		
+        // Inserting the text fixes a UITextView bug which automatically scrolls to the bottom
         // and beyond scroll content size sometimes when the text is too long
-        [self slk_insertTextAtCaretRange:pastedItem];
+        [self slk_insertTextAtCaretRange:pastedText];
     }
 }
 

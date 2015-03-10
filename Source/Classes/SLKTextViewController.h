@@ -441,4 +441,9 @@ NS_CLASS_AVAILABLE_IOS(7_0) @interface SLKTextViewController : UIViewController 
 /** UIGestureRecognizerDelegate */
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer NS_REQUIRES_SUPER;
 
+
+- (CGFloat)slk_appropriateInputbarHeight;
+- (CGFloat)slk_minimumInputbarHeight;
+- (CGFloat)slk_inputBarHeightForLines:(NSUInteger)numberOfLines;
+
 @end
