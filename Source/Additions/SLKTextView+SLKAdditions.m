@@ -106,13 +106,13 @@
 }
 
 - (NSAttributedString *)slk_attributedStringOfSameStyleFromText:(NSString *)text {
-	if ( !text )
-		return nil;
-
+	if ( !text || !text.length )
+		return [[NSAttributedString alloc] initWithString:@""];
+	
 	__block NSAttributedString *result = nil;
 	[self.attributedText enumerateAttributesInRange:(NSMakeRange(0, self.attributedText.length)) options:0 usingBlock:^(NSDictionary *attrs, NSRange range, BOOL *stop) {
 		id attachment = [attrs objectForKey:NSAttachmentAttributeName];
-		if ( attachment && ![attachment isKindOfClass:[NSTextAttachment class]] ) {
+		if ( !attachment || ![attachment isKindOfClass:[NSTextAttachment class]] ) {
 			result = [[NSAttributedString alloc] initWithString:text attributes:attrs];
 			*stop = YES;
 		}
