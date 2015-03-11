@@ -118,6 +118,11 @@
 		}
 	}];
 	
+	if ( !result ) {
+		NSDictionary *attributes = @{NSFontAttributeName : self.font};
+		result = [[NSAttributedString alloc] initWithString:text attributes:attributes];
+	}
+	
 	return result;
 }
 
