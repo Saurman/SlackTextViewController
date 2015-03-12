@@ -398,7 +398,7 @@ SLKPastableMediaType SLKPastableMediaTypeFromNSString(NSString *string)
     
     [super setAttributedText:attributedText];
 	
-	[[NSNotificationCenter defaultCenter] postNotificationName:UITextViewTextDidChangeNotification object:self];
+	//[[NSNotificationCenter defaultCenter] postNotificationName:UITextViewTextDidChangeNotification object:self];
 }
 
 - (void)setFont:(UIFont *)font
