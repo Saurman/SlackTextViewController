@@ -88,7 +88,9 @@
         */
 		self.attributedText = str;
         range.location += [text length];
-        return range;
+		
+		[[NSNotificationCenter defaultCenter] postNotificationName:UITextViewTextDidChangeNotification object:self];
+		return range;
     }
 	
     // Some text is selected, so we replace it with the new text
@@ -97,10 +99,11 @@
 		[str replaceCharactersInRange:range withAttributedString:strToInsert];
 		self.attributedText = str;
 		//self.text = [self.text stringByReplacingCharactersInRange:range withString:text];
-        
+		
+		[[NSNotificationCenter defaultCenter] postNotificationName:UITextViewTextDidChangeNotification object:self];
         return NSMakeRange(range.location+[self.text rangeOfString:text].length, text.length);
     }
-    
+	
     // No text has been inserted, but still return the caret range
     return self.selectedRange;
 }
