@@ -93,7 +93,7 @@ static NSString *AutoCompletionCellIdentifier = @"AutoCompletionCell";
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.tableView registerClass:[MessageTableViewCell class] forCellReuseIdentifier:MessengerCellIdentifier];
 
-	self.leftButton.superview.backgroundColor = [UIColor redColor];
+	self.leftButton.backgroundColor = [UIColor redColor];
     [self.leftButton setImage:[UIImage imageNamed:@"input_icon2"] forState:UIControlStateNormal];
     [self.leftButton setTintColor:[UIColor grayColor]];
 
@@ -109,7 +109,10 @@ static NSString *AutoCompletionCellIdentifier = @"AutoCompletionCell";
     self.textInputbar.counterPosition = SLKCounterPositionTop;
 
     self.typingIndicatorView.canResignByTouch = YES;
-    
+	
+	[self.textInputbar setNeedsLayout];
+	[self.textInputbar layoutIfNeeded];
+	
     [self.autoCompletionView registerClass:[MessageTableViewCell class] forCellReuseIdentifier:AutoCompletionCellIdentifier];
     [self registerPrefixesForAutoCompletion:@[@"@", @"#", @":"]];
 }
