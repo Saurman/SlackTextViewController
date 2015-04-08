@@ -39,7 +39,10 @@ typedef NS_OPTIONS(NSUInteger, SLKPastableMediaType) {
 };
 
 /** @name A custom text input view. */
+@class SLKTextInputbar;
 @interface SLKTextView : UITextView
+
+@property (nonatomic, weak) SLKTextInputbar *textInputBar;
 
 /** The placeholder text string. Default is nil. */
 @property (nonatomic, copy) NSString *placeholder;

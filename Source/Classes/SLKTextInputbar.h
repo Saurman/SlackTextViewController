@@ -140,4 +140,13 @@ typedef NS_ENUM(NSUInteger, SLKCounterPosition) {
 /** The color used for character counter label when it has exceeded the limit. Default is redColor. */
 @property (nonatomic, strong, readwrite) UIColor *charCountLabelWarningColor;
 
+
+@property (nonatomic, strong) NSLayoutConstraint *leftButtonWC;
+@property (nonatomic, strong) NSLayoutConstraint *leftButtonHC;
+@property (nonatomic, strong) NSLayoutConstraint *leftMarginWC;
+@property (nonatomic, strong) NSLayoutConstraint *bottomMarginWC;
+@property (nonatomic, strong) NSLayoutConstraint *rightButtonWC;
+@property (nonatomic, strong) NSLayoutConstraint *rightMarginWC;
+@property (nonatomic, strong) NSLayoutConstraint *editorContentViewHC;
+
 @end
