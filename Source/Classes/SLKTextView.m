@@ -150,13 +150,18 @@ NSString * const SLKTextViewPastedItemData =                    @"SLKTextViewPas
 
 - (NSUInteger)numberOfLines
 {
-    return abs(self.contentSize.height/self.font.lineHeight);
+    return fabs(self.contentSize.height/self.font.lineHeight);
 }
 
 // Returns a different number of lines when landscape and only on iPhone
 - (NSUInteger)maxNumberOfLines
 {
     return _maxNumberOfLines;
+}
+
+- (BOOL)isTypingSuggestionEnabled
+{
+    return (self.autocorrectionType == UITextAutocorrectionTypeNo) ? NO : YES;
 }
 
 // Returns only a supported pasted item
@@ -369,8 +374,6 @@ SLKPastableMediaType SLKPastableMediaTypeFromNSString(NSString *string)
     if (self.isTypingSuggestionEnabled == enabled) {
         return;
     }
-    
-    _typingSuggestionEnabled = enabled;
     
     self.autocorrectionType = enabled ? UITextAutocorrectionTypeDefault : UITextAutocorrectionTypeNo;
     self.spellCheckingType = enabled ? UITextSpellCheckingTypeDefault : UITextSpellCheckingTypeNo;

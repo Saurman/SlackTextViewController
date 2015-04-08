@@ -38,17 +38,13 @@ typedef NS_OPTIONS(NSUInteger, SLKPastableMediaType) {
     SLKPastableMediaTypeAll         = SLKPastableMediaTypeImages|SLKPastableMediaTypeMOV
 };
 
-@class SLKTextInputbar;
-
 /** @name A custom text input view. */
 @interface SLKTextView : UITextView
 
-@property (nonatomic, weak) SLKTextInputbar *textInputBar;
-
-/** The placeholder text string. */
+/** The placeholder text string. Default is nil. */
 @property (nonatomic, copy) NSString *placeholder;
 
-/** The placeholder color. */
+/** The placeholder color. Default is lightGrayColor. */
 @property (nonatomic, copy) UIColor *placeholderColor;
 
 /** The maximum number of lines before enabling scrolling. Default is 0 wich means limitless. */
