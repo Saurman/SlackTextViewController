@@ -135,7 +135,7 @@
     {
         Class class = self.textViewClass ? : [SLKTextView class];
         
-        _textView = [class new];
+        _textView = [[class alloc] init];
         _textView.translatesAutoresizingMaskIntoConstraints = NO;
         _textView.font = [UIFont systemFontOfSize:15.0];
         _textView.maxNumberOfLines = [self slk_defaultNumberOfLines];
@@ -482,6 +482,8 @@
         if (self.textView.delegate && [self.textView.delegate respondsToSelector:@selector(textViewDidChangeSelection:)]) {
             [self.textView.delegate textViewDidChangeSelection:self.textView];
         }
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:SLKTextViewSelectedRangeDidChangeNotification object:self.textView userInfo:nil];
     }
 }
 
